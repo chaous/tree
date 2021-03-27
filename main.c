@@ -16,8 +16,8 @@ int main() {
         scanf("%d", &par);
         add(&testTree, par);
     }
-    //scanf("%d",&n);
-    //delElem(&testTree, n);
+    scanf("%d",&n);
+    delElem(&testTree, n);
     //delNode(&testTree, testTree.head);
     //printTree(&testTree);
     //delNode(&testTree, testTree.head);
@@ -26,6 +26,6 @@ int main() {
     //printf("%d\n",findNode(&testTree, 4)->elem);
     //printf("%d\n", maxHight(&testTree));
     //destrouTree(&testTree);
-    printf("%d\n",treePower(&testTree));
-    //printTree(&testTree);
+    //printf("%d\n",treePower(&testTree));
+    printTree(&testTree);
 }
