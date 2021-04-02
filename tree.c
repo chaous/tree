@@ -53,7 +53,7 @@ void addNodeToNode(Node *head, Node *newNode) {
 }
 
 void add(Tree *tree, int elem) {
-    Node* newNode = malloc(sizeof(Node));
+    Node* newNode = (Node*)malloc(sizeof(Node));
     newNode->elem = elem;
     newNode->left = 0;
     newNode->right = 0;
@@ -62,8 +62,11 @@ void add(Tree *tree, int elem) {
 }
 
 void printTree(Tree *tree) {
-    if(tree == NULL)
+    if(tree == NULL || tree->head == NULL)
+    {
+        puts("empty");
         return;
+    }
     printNodes(tree->head->left);
     printf("%d\n", tree->head->elem);
     printNodes(tree->head->right);
@@ -147,12 +150,14 @@ void delNode(Tree *tree, Node *node) {
         {
             node->elem = replacement->elem;
             replacement->parent->right = replacement->right;
+            if(replacement->right != NULL)
+                replacement->right->parent = replacement->parent;
             free(replacement);
             return;
         }
         while(replacement->left != 0)
         {
-            replacement = node->left;
+            replacement = replacement->left;
         }
         if (replacement->right == 0)
         {
@@ -163,7 +168,9 @@ void delNode(Tree *tree, Node *node) {
         //printf("%d\n", replacement->right->elem);
         node->elem = replacement->elem;
         replacement->parent->left = replacement->right;
+        replacement->right->parent = replacement->parent;
         free(replacement);
+        return;
 
 
 
@@ -264,7 +271,6 @@ void destrouTree(Tree *tree) {
 
     if(tree == NULL)
     {
-        free(tree);
         return;
     }
 
@@ -277,7 +283,6 @@ void destroyNode(Node *node) {
 
     if(node == NULL)
     {
-        free(node);
         return;
     }
     destroyNode(node->left);

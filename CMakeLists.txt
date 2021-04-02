@@ -3,4 +3,4 @@ project(tree C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(tree main.c tree.h tree.c)
+add_executable(tree main.c tree.h tree.c input.h input.c)

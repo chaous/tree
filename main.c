@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include "tree.h"
+#include "input.h"
 
 
 
 
 int main() {
 
-    Tree testTree;
+    getComand();
+    /*Tree testTree;
     createTree(&testTree);
     int n;
     scanf("%d",&n);
@@ -18,6 +20,7 @@ int main() {
     }
     scanf("%d",&n);
     delElem(&testTree, n);
+
     //delNode(&testTree, testTree.head);
     //printTree(&testTree);
     //delNode(&testTree, testTree.head);
@@ -27,5 +30,5 @@ int main() {
     //printf("%d\n", maxHight(&testTree));
     //destrouTree(&testTree);
     //printf("%d\n",treePower(&testTree));
-    printTree(&testTree);
+    printTree(&testTree);*/
 }
