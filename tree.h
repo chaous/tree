@@ -14,6 +14,7 @@ typedef struct Node
     struct Node* right;
     struct Node* parent;
     int elem;
+    int count;
 }Node;
 
 typedef struct Tree

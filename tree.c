@@ -18,6 +18,7 @@ void addNode(Tree *tree, Node *newNode) {
         newNode->left = 0;
         newNode->right = 0;
         newNode->parent = 0;
+        newNode->count = 0;
         return;
     }
     addNodeToNode(tree->head, newNode);
@@ -25,6 +26,7 @@ void addNode(Tree *tree, Node *newNode) {
 }
 
 void addNodeToNode(Node *head, Node *newNode) {
+
     if (head->elem > newNode->elem)
     {
         if (head->left == 0)
@@ -33,6 +35,7 @@ void addNodeToNode(Node *head, Node *newNode) {
             newNode->left = 0;
             newNode->right = 0;
             newNode->parent = head;
+            newNode->count = 0;
             return;
         }
         addNodeToNode(head->left, newNode);
@@ -45,6 +48,7 @@ void addNodeToNode(Node *head, Node *newNode) {
             newNode->left = 0;
             newNode->right = 0;
             newNode->parent = head;
+            newNode->count = 0;
             return;
         }
         addNodeToNode(head->right, newNode);
@@ -53,11 +57,18 @@ void addNodeToNode(Node *head, Node *newNode) {
 }
 
 void add(Tree *tree, int elem) {
+    Node* TreeNode = findNode(tree, elem);
+    if(TreeNode != NULL)
+    {
+        ++(TreeNode->count);
+        return;
+    }
     Node* newNode = (Node*)malloc(sizeof(Node));
     newNode->elem = elem;
     newNode->left = 0;
     newNode->right = 0;
     newNode->parent = 0;
+    newNode->count = 0;
     addNode(tree, newNode);
 }
 
@@ -68,7 +79,8 @@ void printTree(Tree *tree) {
         return;
     }
     printNodes(tree->head->left);
-    printf("%d\n", tree->head->elem);
+    for(int i = 0; i <= tree->head->count; ++i)
+        printf("%d\n", tree->head->elem);
     printNodes(tree->head->right);
 
 }
@@ -77,12 +89,15 @@ void printNodes(Node *node) {
     if(node == 0)
         return;
     printNodes(node->left);
-    printf("%d\n", node->elem);
+    for(int i = 0; i <= node->count; ++i)
+        printf("%d\n", node->elem);
     printNodes(node->right);
 
 }
 
 void delNode(Tree *tree, Node *node) {
+
+
 
 
     if(node->left == 0 && node->right == 0)
@@ -149,6 +164,7 @@ void delNode(Tree *tree, Node *node) {
         if(replacement->left == 0)
         {
             node->elem = replacement->elem;
+            node->count = replacement->count;
             replacement->parent->right = replacement->right;
             if(replacement->right != NULL)
                 replacement->right->parent = replacement->parent;
@@ -162,11 +178,13 @@ void delNode(Tree *tree, Node *node) {
         if (replacement->right == 0)
         {
             node->elem = replacement->elem;
+            node->count = replacement->count;
             free(replacement);
             return;
         }
         //printf("%d\n", replacement->right->elem);
         node->elem = replacement->elem;
+        node->count = replacement->count;
         replacement->parent->left = replacement->right;
         replacement->right->parent = replacement->parent;
         free(replacement);
@@ -263,6 +281,11 @@ bool delElem(Tree *tree, int elem) {
     Node* node = findNode(tree, elem);
     if(node == NULL)
         return false;
+    if(node->count > 0)
+    {
+        --(node->count);
+        return true;
+    }
     delNode(tree, node);
     return true;
 }
